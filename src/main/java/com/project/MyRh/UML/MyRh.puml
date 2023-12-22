@@ -1,0 +1,52 @@
+@startuml
+class Admin {
+    -id : int
+    -name : String
+    -email : String
+    -password : String
+    -phone : String
+    }
+
+class Applicant {
+    -id : Integer
+    -name : String
+    -email : String
+    -phone : Integer
+    -address : String
+    -experience : String
+    -education : String
+    }
+
+class Job {
+    -id : int
+    -title : String
+    -description : String
+    -salary : int
+    -location : String
+    contract : CONTRACT_TYPE
+    }
+
+class Company{
+    -id : int
+    -name : String
+    -email : String
+    -password : String
+    -phone : String
+    -address : String
+    -description : String
+    }
+
+interface CONTRACT_TYPE{
+    +CDI
+    +CDD
+    +INTERIM
+    +FREELANCE
+    }
+
+
+Company  "1" o-- "1..*" Job
+Admin -- Company
+Admin  "1" -- "1..*" Job
+Job +-- CONTRACT_TYPE
+Applicant "1..*" -- "1..*" Job
+@enduml
