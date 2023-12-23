@@ -35,6 +35,11 @@ class Company{
     -address : String
     -description : String
     }
+class Job_Application{
+    -id : int
+    -status : String
+    -date : Date
+    }
 
 interface CONTRACT_TYPE{
     +CDI
@@ -44,9 +49,11 @@ interface CONTRACT_TYPE{
     }
 
 
+
 Company  "1" o-- "1..*" Job
-Admin -- Company
 Admin  "1" -- "1..*" Job
 Job +-- CONTRACT_TYPE
 Applicant "1..*" -- "1..*" Job
+(Job, Applicant) .. Job_Application
+
 @enduml
