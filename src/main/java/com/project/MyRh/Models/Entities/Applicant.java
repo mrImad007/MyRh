@@ -29,7 +29,7 @@ public class Applicant {
     @NotBlank(message = "Description is mandatory")
     private String education;
     @ManyToMany(mappedBy = "applicants")
-    private List<Job> jobs;
+    private List<JobOffer> jobs;
     @OneToMany(mappedBy = "applicant")
     private List<JobApplicants> jobApplicants;
 }
