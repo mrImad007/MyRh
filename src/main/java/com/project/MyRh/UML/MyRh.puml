@@ -1,6 +1,6 @@
 @startuml
 class Admin {
-    -id : int
+    -id : Integer
     -name : String
     -email : String
     -password : String
@@ -17,17 +17,18 @@ class Applicant {
     -education : String
     }
 
-class Job {
-    -id : int
+class JobOffer {
+    -id : Integer
     -title : String
     -description : String
-    -salary : int
+    -salary : Real
     -location : String
-    contract : CONTRACT_TYPE
+    -date : Date
+    -contract : CONTRACT_TYPE
     }
 
 class Company{
-    -id : int
+    -id : Integer
     -name : String
     -email : String
     -password : String
@@ -35,8 +36,8 @@ class Company{
     -address : String
     -description : String
     }
-class Job_Application{
-    -id : int
+class JobApplication{
+    -id : Integer
     -status : String
     -date : Date
     }
@@ -46,14 +47,15 @@ interface CONTRACT_TYPE{
     +CDD
     +INTERIM
     +FREELANCE
+    +STAGE
     }
 
 
 
-Company  "1" o-- "1..*" Job
-Admin  "1" -- "1..*" Job
-Job +-- CONTRACT_TYPE
-Applicant "1..*" -- "1..*" Job
-(Job, Applicant) .. Job_Application
+Company  "1" o-- "1..*" JobOffer
+Admin  "1" -- "1..*" JobOffer
+JobOffer +-- CONTRACT_TYPE
+Applicant "1..*" -- "1..*" JobOffer
+(JobOffer, Applicant) .. JobApplication
 
 @enduml

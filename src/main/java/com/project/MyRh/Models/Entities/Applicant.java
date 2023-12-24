@@ -1,15 +1,17 @@
 package com.project.MyRh.Models.Entities;
 
-import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Admin {
+public class Applicant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -19,7 +21,15 @@ public class Admin {
     @NotBlank(message = "Email is mandatory")
     private String email;
     @NotBlank(message = "Password is mandatory")
-    private String password;
+    private Integer phone;
     @NotBlank(message = "Phone is mandatory")
-    private String phone;
+    private String address;
+    @NotBlank(message = "Address is mandatory")
+    private String experience;
+    @NotBlank(message = "Description is mandatory")
+    private String education;
+    @ManyToMany(mappedBy = "applicants")
+    private List<Job> jobs;
+    @OneToMany(mappedBy = "applicant")
+    private List<JobApplicants> jobApplicants;
 }
