@@ -1,6 +1,7 @@
 package com.project.MyRh.Services;
 
 import com.project.MyRh.DTO.CompanyDto;
+import com.project.MyRh.Exceptions.Exception.NotFound;
 import com.project.MyRh.Mappers.Mapper;
 import com.project.MyRh.Models.Entities.Company;
 import com.project.MyRh.Repositories.CompanyRepository;
@@ -22,5 +23,13 @@ public class CompanyService {
 
     public List<CompanyDto> getAll(){
         return companyRepository.findAll().stream().map(companyMapper::mapTo).collect(Collectors.toList());
+    }
+
+    public CompanyDto getByName(String name){
+        if (companyRepository.findByName(name) == null){
+            throw new NotFound("Company not found");
+        }else {
+            return companyMapper.mapTo(companyRepository.findByName(name));
+        }
     }
 }

@@ -21,4 +21,9 @@ public class CompanyController {
     public List<CompanyDto> getAll(){
         return companyService.getAll();
     }
+
+    @GetMapping("/{name}")
+    public CompanyDto getByName(@PathVariable String name){
+        return companyService.getByName(name);
+    }
 }
