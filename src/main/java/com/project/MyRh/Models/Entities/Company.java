@@ -29,5 +29,5 @@ public class Company {
     @NotBlank(message = "Description is mandatory")
     private String description;
     @OneToMany(mappedBy = "company")
-    private List<JobOffer> jobs;
+    private List<JobOffer> jobOffers;
 }

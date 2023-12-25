@@ -14,7 +14,6 @@ import java.util.List;
 public class Applicant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Integer id;
     @NotBlank(message = "Name is mandatory")
     private String name;
@@ -28,8 +27,7 @@ public class Applicant {
     private String experience;
     @NotBlank(message = "Description is mandatory")
     private String education;
-    @ManyToMany(mappedBy = "applicants")
-    private List<JobOffer> jobs;
+
     @OneToMany(mappedBy = "applicant")
     private List<JobApplicants> jobApplicants;
 }

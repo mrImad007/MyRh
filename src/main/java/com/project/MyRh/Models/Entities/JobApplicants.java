@@ -15,10 +15,10 @@ public class JobApplicants {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
-    @ManyToOne
-    private JobOffer job;
-    @ManyToOne
-    private Applicant applicant;
     private String status;
     private Date date;
+    @ManyToOne
+    private JobOffer jobOffer;
+    @ManyToOne
+    private Applicant applicant;
 }

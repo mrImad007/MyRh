@@ -15,7 +15,6 @@ import java.util.List;
 public class JobOffer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Integer id;
     @NotBlank(message = "Title is mandatory")
     private String title;
@@ -34,8 +33,6 @@ public class JobOffer {
     //relationShips
     @ManyToOne( cascade = CascadeType.ALL)
     private Company company;
-    @ManyToMany(mappedBy = "jobs")
-    private List<Applicant> applicants;
-    @OneToMany(mappedBy = "job")
+    @OneToMany(mappedBy = "jobOffer")
     private List<JobApplicants> jobApplicants;
 }
