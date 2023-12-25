@@ -28,6 +28,8 @@ public class Company {
     private String address;
     @NotBlank(message = "Description is mandatory")
     private String description;
+    @NotBlank(message = "Logo is mandatory")
+    private String logo;
     @OneToMany(mappedBy = "company")
     private List<JobOffer> jobOffers;
 }

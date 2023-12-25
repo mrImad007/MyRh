@@ -35,6 +35,7 @@ class Company{
     -phone : String
     -address : String
     -description : String
+    -logo : String
     }
 class JobApplication{
     -id : Integer
