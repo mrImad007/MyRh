@@ -1,7 +1,8 @@
 package com.project.MyRh.Services;
 
 import com.project.MyRh.DTO.CompanyDto;
-import com.project.MyRh.Exceptions.Exception.NotFound;
+import com.project.MyRh.DTO.Request.CompanyRequest;
+import com.project.MyRh.Exceptions.Exception.*;
 import com.project.MyRh.Mappers.Mapper;
 import com.project.MyRh.Models.Entities.Company;
 import com.project.MyRh.Repositories.CompanyRepository;
@@ -30,6 +31,23 @@ public class CompanyService {
             throw new NotFound("Company not found");
         }else {
             return companyMapper.mapTo(companyRepository.findByName(name));
+        }
+    }
+
+    public CompanyDto saveCompany(CompanyRequest companyRequest){
+        if (companyRequest != null){
+            return companyMapper.mapTo(companyRepository.save(companyRequest.toModel()));
+        }else{
+            throw new OperationFailed("No values in the request");
+        }
+    }
+
+    public boolean DeleteCompany(String name){
+        if (getByName(name) != null){
+            companyRepository.delete(companyMapper.mapFrom(getByName(name)));
+            return true;
+        }else {
+            throw new OperationFailed("Couldn't delete, Company not found");
         }
     }
 }

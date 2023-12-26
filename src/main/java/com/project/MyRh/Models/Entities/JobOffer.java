@@ -26,8 +26,6 @@ public class JobOffer {
     private String location;
     @NotEmpty(message = "Date is mandatory")
     private Date date;
-    @NotBlank(message = "Contract is mandatory")
-    private String contract;
     @NotEmpty(message = "ContractType is mandatory")
     private ContractType contractType;
     //relationShips

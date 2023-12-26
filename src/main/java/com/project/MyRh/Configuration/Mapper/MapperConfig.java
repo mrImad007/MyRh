@@ -1,4 +1,4 @@
-package com.project.MyRh.Configuration;
+package com.project.MyRh.Configuration.Mapper;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;

@@ -15,7 +15,7 @@ public class Company {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long id;
+    private Integer id;
     @NotBlank(message = "Name is mandatory")
     private String name;
     @NotBlank(message = "Email is mandatory")
