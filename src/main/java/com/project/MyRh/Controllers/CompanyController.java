@@ -30,7 +30,7 @@ public class CompanyController {
     }
 
     @PostMapping
-    public CompanyDto saveCompany(@RequestBody @NotNull CompanyRequest companyRequest){
+    public CompanyDto saveCompany(@RequestBody CompanyRequest companyRequest){
         return companyService.saveCompany(companyRequest);
     }
 

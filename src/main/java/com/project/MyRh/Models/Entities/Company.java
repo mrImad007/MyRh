@@ -1,4 +1,5 @@
 package com.project.MyRh.Models.Entities;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
@@ -30,6 +31,8 @@ public class Company {
     private String description;
     @NotBlank(message = "Logo is mandatory")
     private String logo;
+
     @OneToMany(mappedBy = "company")
+    @JsonIgnore
     private List<JobOffer> jobOffers;
 }

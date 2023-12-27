@@ -33,7 +33,7 @@ public class JobOfferRequest {
     private Integer company_id;
 
     public JobOffer toModel(){
-        Company company = Company.builder().id(this.company_id).build();
+        Company company = (company_id != null) ? Company.builder().id(this.company_id).build() : null;
 
         return JobOffer.builder()
                 .title(this.title)

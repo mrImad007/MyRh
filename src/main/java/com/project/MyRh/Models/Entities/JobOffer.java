@@ -1,5 +1,6 @@
 package com.project.MyRh.Models.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.MyRh.Models.Enums.ContractType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
@@ -20,17 +21,18 @@ public class JobOffer {
     private String title;
     @NotBlank(message = "Description is mandatory")
     private String description;
-    @NotEmpty(message = "Salary is mandatory")
     private Integer salary;
     @NotBlank(message = "Location is mandatory")
     private String location;
-    @NotEmpty(message = "Date is mandatory")
     private Date date;
-    @NotEmpty(message = "ContractType is mandatory")
+    @Enumerated(EnumType.STRING)
     private ContractType contractType;
-    //relationShips
-    @ManyToOne( cascade = CascadeType.ALL)
+
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+    @JoinColumn(name = "company_id")
     private Company company;
+
     @OneToMany(mappedBy = "jobOffer")
+    @JsonIgnore
     private List<JobApplicants> jobApplicants;
 }

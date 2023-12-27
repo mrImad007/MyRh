@@ -10,6 +10,7 @@ import com.project.MyRh.Repositories.CompanyRepository;
 import com.project.MyRh.Repositories.jobOfferRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -47,10 +48,13 @@ public class JobOfferService {
         }else {
             throw new NotFound("No Company Found!");
         }
-
     }
 
+    @Transactional
     public JobOfferDto saveJobOffer(JobOfferRequest jobOfferRequest){
+        System.out.println("====================================");
+        System.out.println(jobOfferRequest);
+        System.out.println("====================================");
         if (jobOfferRequest != null){
             return jobOfferMapper.mapTo(jobOfferRepository.save(jobOfferRequest.toModel()));
         }else{
