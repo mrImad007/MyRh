@@ -27,11 +27,9 @@ public class JobOffer {
     private Date date;
     @Enumerated(EnumType.STRING)
     private ContractType contractType;
-
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
     @JoinColumn(name = "company_id")
     private Company company;
-
     @OneToMany(mappedBy = "jobOffer")
     @JsonIgnore
     private List<JobApplicants> jobApplicants;

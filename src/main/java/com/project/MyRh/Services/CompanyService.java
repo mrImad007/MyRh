@@ -34,20 +34,43 @@ public class CompanyService {
         }
     }
 
-    public CompanyDto saveCompany(CompanyRequest companyRequest){
-        if (companyRequest != null){
-            return companyMapper.mapTo(companyRepository.save(companyRequest.toModel()));
-        }else{
-            throw new OperationFailed("No values in the request");
+    public CompanyDto saveCompany(CompanyRequest companyRequest) {
+        if (isRequestValid(companyRequest)) {
+            if(companyRepository.findByEmailAndPhone(companyRequest.getEmail(),companyRequest.getPhone()) == null) {
+                try {
+                    return companyMapper.mapTo(companyRepository.save(companyRequest.toModel()));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    throw new OperationFailed("Couldn't save company");
+                }
+            }else {
+                throw new AlreadyExisting("Company already existing");
+            }
+        }
+        else {
+            throw new InvalidCredentials("Request is not valid");
         }
     }
 
     public boolean DeleteCompany(String name){
         if (getByName(name) != null){
-            companyRepository.delete(companyMapper.mapFrom(getByName(name)));
-            return true;
+            try {
+                companyRepository.delete(companyRepository.findByName(name));
+                return true;
+            }catch (Exception e) {
+                e.printStackTrace();
+                throw new OperationFailed("Couldn't delete company");
+            }
         }else {
-            throw new OperationFailed("Couldn't delete, Company not found");
+                throw new NotFound("Company not found");
+        }
+    }
+
+    public boolean isRequestValid(CompanyRequest companyRequest) {
+        if (companyRequest != null) {
+            return true;
+        } else {
+            return false;
         }
     }
 }

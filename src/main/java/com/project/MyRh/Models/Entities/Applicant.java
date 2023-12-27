@@ -18,8 +18,10 @@ public class Applicant {
     @NotBlank(message = "Name is mandatory")
     private String name;
     @NotBlank(message = "Email is mandatory")
+    @Column(unique = true)
     private String email;
     @NotBlank(message = "Password is mandatory")
+    @Column(unique = true)
     private Integer phone;
     @NotBlank(message = "Phone is mandatory")
     private String address;
