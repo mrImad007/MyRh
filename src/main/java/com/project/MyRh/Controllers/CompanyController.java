@@ -30,14 +30,10 @@ public class CompanyController {
     }
 
     @PostMapping
-    public CompanyDto saveCompany(@RequestBody CompanyRequest companyRequest){
-        return companyService.saveCompany(companyRequest);
-    }
+    public CompanyDto saveCompany(@RequestBody CompanyRequest companyRequest){return companyService.saveCompany(companyRequest);}
 
     @PutMapping
-    public CompanyDto updateCompany(@RequestBody @NotNull CompanyRequest companyRequest){
-        return companyService.saveCompany(companyRequest);
-    }
+    public CompanyDto updateCompany(@RequestBody @NotNull CompanyRequest companyRequest){return companyService.saveCompany(companyRequest);}
 
     @DeleteMapping("/{name}")
     public boolean deleteCompany(@PathVariable @NotNull String name){

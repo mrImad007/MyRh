@@ -40,7 +40,6 @@ public class CompanyService {
                 try {
                     return companyMapper.mapTo(companyRepository.save(companyRequest.toModel()));
                 } catch (Exception e) {
-                    e.printStackTrace();
                     throw new OperationFailed("Couldn't save company");
                 }
             }else {
@@ -58,11 +57,10 @@ public class CompanyService {
                 companyRepository.delete(companyRepository.findByName(name));
                 return true;
             }catch (Exception e) {
-                e.printStackTrace();
                 throw new OperationFailed("Couldn't delete company");
             }
         }else {
-                throw new NotFound("Company not found");
+            throw new NotFound("Company not found");
         }
     }
 

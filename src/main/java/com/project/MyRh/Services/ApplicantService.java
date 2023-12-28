@@ -40,13 +40,17 @@ public class ApplicantService {
     public ApplicantDto saveApplicant(ApplicantRequest applicantRequest){
         try {
             if (isEmailValid(applicantRequest.getEmail())) {
-                return applicantMapper.mapTo(applicantRepository.save(applicantRequest.toModel()));
-            }
-            else {
+                if (getByEmail(applicantRequest.getEmail()) == null) {
+                    return applicantMapper.mapTo(applicantRepository.save(applicantRequest.toModel()));
+                } else {
+                    throw new AlreadyExisting("Applicant already existing");
+                }
+            }else {
                 throw new InvalidCredentials("Email is not valid");
             }
         } catch (AlreadyExisting e) {
             throw new OperationFailed("Failed to save applicant, email or phone already existing");
         }
+
     }
 }

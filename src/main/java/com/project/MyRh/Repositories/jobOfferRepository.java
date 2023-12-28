@@ -1,6 +1,5 @@
 package com.project.MyRh.Repositories;
 
-import com.project.MyRh.DTO.JobOfferDto;
 import com.project.MyRh.Models.Entities.Company;
 import com.project.MyRh.Models.Entities.JobOffer;
 import org.springframework.data.jpa.repository.JpaRepository;
