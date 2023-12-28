@@ -1,5 +1,6 @@
 package com.project.MyRh.Models.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,7 +19,9 @@ public class JobApplicants {
     private String status;
     private Date date;
     @ManyToOne
+    @JsonIgnore
     private JobOffer jobOffer;
     @ManyToOne
+    @JsonIgnore
     private Applicant applicant;
 }
