@@ -19,7 +19,6 @@ pour une meilleure ergonomie, le cabinet MyRH souhaite faire une pagination de 1
 
 # Travail demandé
 
-​
 
 Créer le diagramme de classe et cas d'utilisation adéquat
 
@@ -33,28 +32,10 @@ Ajout des testes unitaires pour la validation de l'offre d'emploi
 
 consommer votre Api en Angular en utilisant les Stateless et Stateful
 
-Modalités pédagogiques
+# Modalités pédagogiques
 travail individuel
 
 Date Début: 18/12/2023
-
-Date Fin: 29/12/2023 à 23h:59
-
-(10 jours)
-
-# Modalités d'évaluation
-Présentation de 30 minutes :
-
-10 minutes : Démonstration des fonctionnalités de l'application.
-
-10 minutes : Explication du code et de son organisation ainsi que la modélisation.
-
-5 minutes : Mise en situation.
-
-5 minutes : évaluation des savoirs(Q/A)
-
-# Livrables
-lien github de l'application
 
 # Critères de performance
 Application structurée en couches
