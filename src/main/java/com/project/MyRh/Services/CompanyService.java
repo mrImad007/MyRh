@@ -21,11 +21,9 @@ public class CompanyService {
         this.companyRepository = companyRepository;
         this.companyMapper = companyMapper;
     }
-
     public List<CompanyDto> getAll(){
         return companyRepository.findAll().stream().map(companyMapper::mapTo).collect(Collectors.toList());
     }
-
     public CompanyDto getByName(String name){
         if (companyRepository.findByName(name) == null){
             throw new NotFound("Company not found");
@@ -33,7 +31,6 @@ public class CompanyService {
             return companyMapper.mapTo(companyRepository.findByName(name));
         }
     }
-
     public CompanyDto saveCompany(CompanyRequest companyRequest) {
         if (isRequestValid(companyRequest)) {
             if(companyRepository.findByEmailAndPhone(companyRequest.getEmail(),companyRequest.getPhone()) == null) {
@@ -50,7 +47,6 @@ public class CompanyService {
             throw new InvalidCredentials("Request is not valid");
         }
     }
-
     public boolean DeleteCompany(String name){
         if (getByName(name) != null){
             try {
@@ -63,12 +59,7 @@ public class CompanyService {
             throw new NotFound("Company not found");
         }
     }
-
     public boolean isRequestValid(CompanyRequest companyRequest) {
-        if (companyRequest != null) {
-            return true;
-        } else {
-            return false;
-        }
+        return companyRequest != null;
     }
 }
