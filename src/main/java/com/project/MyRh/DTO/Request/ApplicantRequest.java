@@ -2,6 +2,7 @@ package com.project.MyRh.DTO.Request;
 
 import com.project.MyRh.Models.Entities.Applicant;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,7 +17,7 @@ public class ApplicantRequest {
     private String name;
     @NotBlank
     private String email;
-    @NotBlank
+    @NotEmpty
     private Integer phone;
     @NotBlank
     private String address;
@@ -24,6 +25,8 @@ public class ApplicantRequest {
     private String experience;
     @NotBlank
     private String education;
+    @NotBlank
+    private String resume;
 
     public Applicant toModel(){
         return Applicant.builder()
@@ -33,6 +36,7 @@ public class ApplicantRequest {
                 .address(this.address)
                 .experience(this.experience)
                 .education(this.education)
+                .Resume(this.resume)
                 .build();
     }
 }

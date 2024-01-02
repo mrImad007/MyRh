@@ -14,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/companies")
+@CrossOrigin("http://localhost:4200")
 public class CompanyController {
     private final CompanyService companyService;
     private final FileUpload fileUpload;

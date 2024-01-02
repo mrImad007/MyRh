@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/application")
+@RequestMapping("api/applications")
+@CrossOrigin("http://localhost:4200")
 public class JobApplicantController {
 
     private final JobApplicantsService jobApplicantsService;
@@ -22,6 +23,11 @@ public class JobApplicantController {
     @GetMapping()
     public JobApplicantsDto findCompanyApplications(@RequestParam Integer applicant_id, @RequestParam Integer jobOffer_id){
         return jobApplicantsService.findByApplicant_IdAndJobOffer_Id(applicant_id,jobOffer_id);
+    }
+
+    @GetMapping("/{jobOffer_id}")
+    public List<JobApplicantsDto> findApplicationsByJobOffer(@PathVariable Integer jobOffer_id){
+        return jobApplicantsService.findByJobOffer(jobOffer_id);
     }
 
     @PostMapping

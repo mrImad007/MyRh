@@ -16,6 +16,12 @@ public class JobApplicantsRequest {
     private Integer jobOffer_id;
     @NotNull(message = "Applicant is mandatory")
     private Integer applicant_id;
+    @NotBlank
+    private String name;
+    @NotBlank
+    private String email;
+    @NotEmpty
+    private Integer phone;
 
     public JobApplicants toModel(){
         JobOffer jobOffer = JobOffer.builder().id(this.jobOffer_id).build();

@@ -20,7 +20,7 @@ public class Applicant {
     @NotBlank(message = "Email is mandatory")
     @Column(unique = true)
     private String email;
-    @NotBlank(message = "Password is mandatory")
+    @NotEmpty(message = "Phone is mandatory")
     @Column(unique = true)
     private Integer phone;
     @NotBlank(message = "Phone is mandatory")
@@ -29,6 +29,8 @@ public class Applicant {
     private String experience;
     @NotBlank(message = "Description is mandatory")
     private String education;
+    @NotEmpty(message = "Resume is mandatory")
+    private String Resume;
 
     @OneToMany(mappedBy = "applicant")
     private List<JobApplicants> jobApplicants;

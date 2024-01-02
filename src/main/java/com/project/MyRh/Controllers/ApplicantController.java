@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/applicant")
+@CrossOrigin("http://localhost:4200")
 public class ApplicantController {
     private final ApplicantService applicantService;
     @Autowired

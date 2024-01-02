@@ -1,6 +1,7 @@
 package com.project.MyRh.DTO;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,7 +17,6 @@ public class ApplicantDto {
     private String name;
     @NotBlank
     private String email;
-    @NotBlank
     private Integer phone;
     @NotBlank
     private String address;

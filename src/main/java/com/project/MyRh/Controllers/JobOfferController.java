@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/offers")
+@CrossOrigin("http://localhost:4200")
 public class JobOfferController {
     private final JobOfferService jobOfferService;
     @Autowired

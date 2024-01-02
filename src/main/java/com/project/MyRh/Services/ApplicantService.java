@@ -34,20 +34,23 @@ public class ApplicantService {
     }
 
     public ApplicantDto getByEmail(String email){
-        return applicantMapper.mapTo(applicantRepository.getByEmail(email));
+        if (applicantRepository.getByEmail(email) == null){
+            return null;
+        }else {
+            return applicantMapper.mapTo(applicantRepository.getByEmail(email));
+        }
     }
 
     public ApplicantDto saveApplicant(ApplicantRequest applicantRequest){
+        System.out.println("========================= inside the applicant service (save)");
+        System.out.println("applicantRequest : "+applicantRequest);
+        System.out.println("=========================");
         try {
-            if (isEmailValid(applicantRequest.getEmail())) {
                 if (getByEmail(applicantRequest.getEmail()) == null) {
                     return applicantMapper.mapTo(applicantRepository.save(applicantRequest.toModel()));
                 } else {
                     throw new AlreadyExisting("Applicant already existing");
                 }
-            }else {
-                throw new InvalidCredentials("Email is not valid");
-            }
         } catch (AlreadyExisting e) {
             throw new OperationFailed("Failed to save applicant, email or phone already existing");
         }

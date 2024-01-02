@@ -8,5 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface CompanyRepository extends JpaRepository<Company, Integer>{
     Company findByName(String name);
     Company findByEmailAndPhone(String email, String phone);
+    Company findByEmailAndPassword(String email, String password);
 
 }

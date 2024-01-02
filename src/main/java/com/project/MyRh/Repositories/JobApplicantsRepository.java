@@ -10,4 +10,6 @@ import java.util.Optional;
 @Repository
 public interface JobApplicantsRepository extends JpaRepository<JobApplicants, Integer>{
     Optional<JobApplicants> findByApplicant_IdAndJobOffer_Id(Integer applicant_id, Integer jobOffer_id);
+    List<JobApplicants> findByJobOffer_Id(Integer jobOffer_id);
+
 }

@@ -1,27 +1,41 @@
 package com.project.MyRh.Services;
 
+import com.project.MyRh.DTO.ApplicantDto;
+import com.project.MyRh.DTO.CompanyDto;
 import com.project.MyRh.DTO.JobApplicantsDto;
+import com.project.MyRh.DTO.Request.ApplicantRequest;
 import com.project.MyRh.DTO.Request.JobApplicantsRequest;
 import com.project.MyRh.Exceptions.Exception.AlreadyExisting;
 import com.project.MyRh.Exceptions.Exception.NotFound;
 import com.project.MyRh.Exceptions.Exception.OperationFailed;
 import com.project.MyRh.Mappers.Mapper;
+import com.project.MyRh.Models.Entities.Applicant;
+import com.project.MyRh.Models.Entities.Company;
 import com.project.MyRh.Models.Entities.JobApplicants;
 import com.project.MyRh.Repositories.JobApplicantsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
 public class JobApplicantsService {
     private final JobApplicantsRepository jobApplicantsRepository;
+    private final ApplicantService applicantService;
+    private final CompanyService companyService;
     private final Mapper<JobApplicants, JobApplicantsDto> jobApplicantsMapper;
+    private final Mapper<Applicant, ApplicantDto> applicantsMapper;
+    private final Mapper<Company, CompanyDto> companiessMapper;
     @Autowired
-    public JobApplicantsService(JobApplicantsRepository jobApplicantsRepository, Mapper<JobApplicants, JobApplicantsDto> jobApplicantsMapper) {
+    public JobApplicantsService(JobApplicantsRepository jobApplicantsRepository, ApplicantService applicantService, CompanyService companyService, Mapper<JobApplicants, JobApplicantsDto> jobApplicantsMapper, Mapper<Applicant, ApplicantDto> applicantsMapper, Mapper<Company, CompanyDto> companiessMapper) {
         this.jobApplicantsRepository = jobApplicantsRepository;
+        this.applicantService = applicantService;
+        this.companyService = companyService;
         this.jobApplicantsMapper = jobApplicantsMapper;
+        this.applicantsMapper = applicantsMapper;
+        this.companiessMapper = companiessMapper;
     }
 
     public JobApplicantsDto findById(Integer id) {
@@ -31,6 +45,10 @@ public class JobApplicantsService {
         }else {
             throw new NotFound("JobApplicants not found");
         }
+    }
+
+    public List<JobApplicantsDto> findByJobOffer(Integer jobOffer_id){
+        return jobApplicantsRepository.findByJobOffer_Id(jobOffer_id).stream().map(jobApplicantsMapper::mapTo).toList();
     }
 
     public JobApplicantsDto findByApplicant_IdAndJobOffer_Id(Integer applicant_id, Integer jobOffer_id) {
@@ -47,18 +65,47 @@ public class JobApplicantsService {
     }
 
     public JobApplicantsDto save(JobApplicantsRequest jobApplicantsRequest) {
-        if (!isApplicationNotExisting(jobApplicantsRequest.getApplicant_id(), jobApplicantsRequest.getJobOffer_id())){
+        if (applicantService.getByEmail(jobApplicantsRequest.getEmail()) != null){
+            jobApplicantsRequest.setApplicant_id(applicantService.getByEmail(jobApplicantsRequest.getEmail()).getId());
+
+                try {
+                    JobApplicants application = jobApplicantsRequest.toModel();
+                    application.setDate(new Date());
+                    application.setStatus("ON HOLD");
+                    return jobApplicantsMapper.mapTo(jobApplicantsRepository.save(application));
+                }catch (OperationFailed e){
+                    throw new OperationFailed("Failed to create Application!");
+                }
+
+        }else {
             try {
-                JobApplicants application = jobApplicantsRequest.toModel();
-                application.setDate(new Date());
-                application.setStatus("ON HOLD");
-                return jobApplicantsMapper.mapTo(jobApplicantsRepository.save(application));
+                ApplicantRequest applicantRequest = new ApplicantRequest();
+                applicantRequest.setName(jobApplicantsRequest.getName());
+                applicantRequest.setEmail(jobApplicantsRequest.getEmail());
+                applicantRequest.setPhone(jobApplicantsRequest.getPhone());
+                applicantRequest.setAddress("adress");
+                applicantRequest.setEducation("education");
+                applicantRequest.setExperience("exp");
+                applicantRequest.setResume("resume");
+
+
+                if (applicantService.saveApplicant(applicantRequest) != null){
+                    try {
+                        JobApplicants application = jobApplicantsRequest.toModel();
+                        application.setDate(new Date());
+                        application.setStatus("ON HOLD");
+                        return jobApplicantsMapper.mapTo(jobApplicantsRepository.save(application));
+                    }catch (OperationFailed e){
+                        throw new OperationFailed("Failed to create Application!");
+                    }
+                }else {
+                    throw new OperationFailed("Failed to create Applicant!");
+                }
             }catch (OperationFailed e){
                 throw new OperationFailed("Failed to create Application!");
             }
-        }else {
-            throw new AlreadyExisting("Already Applied to this offer!");
         }
+
     }
 
 
