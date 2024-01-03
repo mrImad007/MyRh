@@ -2,6 +2,7 @@ package com.project.MyRh.Controllers;
 
 import com.project.MyRh.Configuration.Cloudinary.FileUpload;
 import com.project.MyRh.DTO.CompanyDto;
+import com.project.MyRh.DTO.Request.AuthRequest;
 import com.project.MyRh.DTO.Request.CompanyRequest;
 import com.project.MyRh.Services.CompanyService;
 import jakarta.validation.constraints.NotNull;
@@ -50,6 +51,14 @@ public class CompanyController {
     @DeleteMapping("/{name}")
     public boolean deleteCompany(@PathVariable @NotNull String name){
         return companyService.DeleteCompany(name);
+    }
+
+    @PostMapping("/auth")
+    public CompanyDto authentication(@RequestBody AuthRequest authRequest){
+        System.out.println("==============");
+        System.out.println(authRequest);
+        System.out.println("==============");
+        return companyService.basicAuth(authRequest.getEmail(), authRequest.getPassword());
     }
 
 }

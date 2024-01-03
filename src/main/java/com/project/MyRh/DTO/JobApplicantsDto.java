@@ -23,9 +23,7 @@ public class JobApplicantsDto {
     @NotBlank(message = "Date is mandatory")
     private Date date;
     @NotNull(message = "JobOffer is mandatory")
-    @JsonIgnore
     private JobOffer jobOffer;
     @NotNull(message = "Applicant is mandatory")
-    @JsonIgnore
     private Applicant applicant;
 }

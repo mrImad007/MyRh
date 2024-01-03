@@ -62,4 +62,12 @@ public class CompanyService {
     public boolean isRequestValid(CompanyRequest companyRequest) {
         return companyRequest != null;
     }
+
+    public CompanyDto basicAuth(String email, String password){
+        if (companyRepository.findByEmailAndPassword(email,password) == null){
+            throw new NotFound("Company login not found");
+        }else {
+            return companyMapper.mapTo(companyRepository.findByEmailAndPassword(email,password));
+        }
+    }
 }

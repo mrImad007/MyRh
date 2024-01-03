@@ -5,6 +5,7 @@ import com.project.MyRh.DTO.Request.JobOfferRequest;
 import com.project.MyRh.Exceptions.Exception.NotFound;
 import com.project.MyRh.Exceptions.Exception.OperationFailed;
 import com.project.MyRh.Mappers.Mapper;
+import com.project.MyRh.Models.Entities.Company;
 import com.project.MyRh.Models.Entities.JobOffer;
 import com.project.MyRh.Repositories.CompanyRepository;
 import com.project.MyRh.Repositories.jobOfferRepository;
@@ -38,17 +39,22 @@ public class JobOfferService {
         }
     }
 
-    public List<JobOfferDto> findOfferByCompany(String company){
-        if(companyRepository.findByName(company) != null){
-            if (jobOfferRepository.findJobOfferByCompany(companyRepository.findByName(company)) != null){
-                return jobOfferRepository.findJobOfferByCompany(companyRepository.findByName(company)).stream().map(jobOfferMapper::mapTo).toList();
-            }else{
-                throw new NotFound("No Job Offer Found!");
+    public List<JobOfferDto> findOfferByCompany(String companyName) {
+        Company company = companyRepository.findByName(companyName);
+
+        if (company != null) {
+            List<JobOffer> jobOffers = jobOfferRepository.findJobOffersByCompany(company);
+
+            if (jobOffers != null && !jobOffers.isEmpty()) {
+                return jobOffers.stream().map(jobOfferMapper::mapTo).toList();
+            } else {
+                throw new NotFound("No Job Offer Found for Company: " + companyName);
             }
-        }else {
-            throw new NotFound("No Company Found!");
+        } else {
+            throw new NotFound("No Company Found with name: " + companyName);
         }
     }
+
 
     @Transactional
     public JobOfferDto saveJobOffer(JobOfferRequest jobOfferRequest){
