@@ -26,7 +26,7 @@ public class ApplicantRequest {
     @NotBlank
     private String education;
     @NotBlank
-    private String resume;
+    private String Resume;
 
     public Applicant toModel(){
         return Applicant.builder()
@@ -36,7 +36,7 @@ public class ApplicantRequest {
                 .address(this.address)
                 .experience(this.experience)
                 .education(this.education)
-                .Resume(this.resume)
+                .Resume(this.Resume)
                 .build();
     }
 }

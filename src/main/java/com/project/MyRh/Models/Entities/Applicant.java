@@ -20,7 +20,7 @@ public class Applicant {
     @NotBlank(message = "Email is mandatory")
     @Column(unique = true)
     private String email;
-    @NotEmpty(message = "Phone is mandatory")
+    @NotNull(message = "Phone is mandatory")
     @Column(unique = true)
     private Integer phone;
     @NotBlank(message = "Phone is mandatory")

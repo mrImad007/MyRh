@@ -22,10 +22,18 @@ public class JobApplicantsRequest {
     private String email;
     @NotEmpty
     private Integer phone;
+    @NotEmpty
+    private String Resume;
 
     public JobApplicants toModel(){
         JobOffer jobOffer = JobOffer.builder().id(this.jobOffer_id).build();
-        Applicant applicant = Applicant.builder().id(this.applicant_id).build();
+        Applicant applicant = Applicant.builder().
+                id(this.applicant_id)
+                .name(this.name)
+                .email(this.email)
+                .phone(this.phone)
+                .Resume(this.Resume)
+                .build();
 
         return JobApplicants.builder()
                 .jobOffer(jobOffer)

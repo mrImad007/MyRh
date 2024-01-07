@@ -1,16 +1,12 @@
 package com.project.MyRh.Services;
 
-import com.project.MyRh.DTO.ApplicantDto;
-import com.project.MyRh.DTO.CompanyDto;
+
 import com.project.MyRh.DTO.JobApplicantsDto;
 import com.project.MyRh.DTO.Request.ApplicantRequest;
 import com.project.MyRh.DTO.Request.JobApplicantsRequest;
-import com.project.MyRh.Exceptions.Exception.AlreadyExisting;
 import com.project.MyRh.Exceptions.Exception.NotFound;
 import com.project.MyRh.Exceptions.Exception.OperationFailed;
 import com.project.MyRh.Mappers.Mapper;
-import com.project.MyRh.Models.Entities.Applicant;
-import com.project.MyRh.Models.Entities.Company;
 import com.project.MyRh.Models.Entities.JobApplicants;
 import com.project.MyRh.Repositories.JobApplicantsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,18 +20,13 @@ import java.util.Optional;
 public class JobApplicantsService {
     private final JobApplicantsRepository jobApplicantsRepository;
     private final ApplicantService applicantService;
-    private final CompanyService companyService;
     private final Mapper<JobApplicants, JobApplicantsDto> jobApplicantsMapper;
-    private final Mapper<Applicant, ApplicantDto> applicantsMapper;
-    private final Mapper<Company, CompanyDto> companiessMapper;
     @Autowired
-    public JobApplicantsService(JobApplicantsRepository jobApplicantsRepository, ApplicantService applicantService, CompanyService companyService, Mapper<JobApplicants, JobApplicantsDto> jobApplicantsMapper, Mapper<Applicant, ApplicantDto> applicantsMapper, Mapper<Company, CompanyDto> companiessMapper) {
+    public JobApplicantsService(JobApplicantsRepository jobApplicantsRepository, ApplicantService applicantService, Mapper<JobApplicants, JobApplicantsDto> jobApplicantsMapper) {
         this.jobApplicantsRepository = jobApplicantsRepository;
         this.applicantService = applicantService;
-        this.companyService = companyService;
         this.jobApplicantsMapper = jobApplicantsMapper;
-        this.applicantsMapper = applicantsMapper;
-        this.companiessMapper = companiessMapper;
+
     }
 
     public JobApplicantsDto findById(Integer id) {
@@ -67,7 +58,6 @@ public class JobApplicantsService {
     public JobApplicantsDto save(JobApplicantsRequest jobApplicantsRequest) {
         if (applicantService.getByEmail(jobApplicantsRequest.getEmail()) != null){
             jobApplicantsRequest.setApplicant_id(applicantService.getByEmail(jobApplicantsRequest.getEmail()).getId());
-
                 try {
                     JobApplicants application = jobApplicantsRequest.toModel();
                     application.setDate(new Date());
@@ -86,8 +76,6 @@ public class JobApplicantsService {
                 applicantRequest.setAddress("adress");
                 applicantRequest.setEducation("education");
                 applicantRequest.setExperience("exp");
-                applicantRequest.setResume("resume");
-
 
                 if (applicantService.saveApplicant(applicantRequest) != null){
                     try {
