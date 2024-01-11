@@ -24,12 +24,20 @@ public enum Role {
                     COMPANY_CREATE
             )
     ),
-    MANAGER(
+    COMPANY(
             Set.of(
                     COMPANY_READ,
                     COMPANY_UPDATE,
                     COMPANY_DELETE,
                     COMPANY_CREATE
+            )
+    ),
+    APPLICANT(
+            Set.of(
+                    APPLICANT_READ,
+                    APPLICANT_UPDATE,
+                    APPLICANT_DELETE,
+                    APPLICANT_CREATE
             )
     );
 

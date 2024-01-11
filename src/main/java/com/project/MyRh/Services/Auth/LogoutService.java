@@ -1,4 +1,4 @@
-package com.project.MyRh.Users;
+package com.project.MyRh.Services.Auth;
 
 
 import com.project.MyRh.JWT.Token.TokenRepository;

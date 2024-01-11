@@ -1,6 +1,7 @@
 package com.project.MyRh.JWT.Token;
 
 import com.project.MyRh.Models.Entities.Admin;
+import com.project.MyRh.Models.Entities.Auth.Manager;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -37,6 +38,6 @@ public class Token {
     public boolean expired;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "admin_id")
-    public Admin admin;
+    @JoinColumn(name = "manager_id")
+    public Manager manager;
 }

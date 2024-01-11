@@ -1,19 +1,19 @@
-package com.project.MyRh.Users;
+package com.project.MyRh.Services.Auth;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.MyRh.DTO.AuthenticationResponse;
 import com.project.MyRh.DTO.Request.AuthenticationRequest;
+import com.project.MyRh.Exceptions.Exception.AlreadyExisting;
 import com.project.MyRh.JWT.Services.JwtService;
 import com.project.MyRh.JWT.Token.Token;
 import com.project.MyRh.JWT.Token.TokenRepository;
 import com.project.MyRh.JWT.Token.TokenType;
-import com.project.MyRh.Models.Entities.Admin;
-import com.project.MyRh.Repositories.AdminRepository;
+import com.project.MyRh.Models.Entities.Auth.Manager;
+import com.project.MyRh.Repositories.Auth.ManagerRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.converter.json.GsonBuilderUtils;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -24,44 +24,47 @@ import java.io.IOException;
 
 @Service
 @RequiredArgsConstructor
-public class UserService {
-    private final AdminRepository repository;
+public class ManagerService {
+    private final ManagerRepository managerRepository;
     private final TokenRepository tokenRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
     public AuthenticationResponse register(RegisterRequest request) {
-        var admin = Admin.builder()
-                .name(request.getName())
-                .email(request.getEmail())
-                .password(passwordEncoder.encode(request.getPassword()))
-                .phone(request.getPhone())
-                .role(request.getRole())
-                .build();
-        var savedAdmin = repository.save(admin);
-        var jwtToken = jwtService.generateToken(admin);
-        var refreshToken = jwtService.generateRefreshToken(admin);
-        saveUserToken(savedAdmin, jwtToken);
-        return AuthenticationResponse.builder()
-                .accessToken(jwtToken)
-                .refreshToken(refreshToken)
-                .build();
+
+        if (managerRepository.findByEmailAndPhone(request.getEmail(), request.getPhone()).isPresent()){
+            throw new AlreadyExisting("User Already Existing");
+        }else{
+            var manager = Manager.builder()
+                    .name(request.getName())
+                    .email(request.getEmail())
+                    .password(passwordEncoder.encode(request.getPassword()))
+                    .phone(request.getPhone())
+                    .role(request.getRole())
+                    .build();
+
+            var savedManager = managerRepository.save(manager);
+            var jwtToken = jwtService.generateToken(manager);
+            var refreshToken = jwtService.generateRefreshToken(manager);
+            saveUserToken(savedManager, jwtToken);
+            return AuthenticationResponse.builder()
+                    .accessToken(jwtToken)
+                    .refreshToken(refreshToken)
+                    .build();
+        }
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
-        System.out.println("inside the authentication");
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),
                         request.getPassword()
                 )
         );
-        var user = repository.findByEmail(request.getEmail())
+        var user = managerRepository.findByEmail(request.getEmail())
                 .orElseThrow();
-        System.out.println("the user : "+ user);
         var jwtToken = jwtService.generateToken(user);
-        System.out.println("the token : "+ jwtToken);
         var refreshToken = jwtService.generateRefreshToken(user);
         revokeAllUserTokens(user);
         saveUserToken(user, jwtToken);
@@ -71,9 +74,9 @@ public class UserService {
                 .build();
     }
 
-    private void saveUserToken(Admin user, String jwtToken) {
+    private void saveUserToken(Manager manager, String jwtToken) {
         var token = Token.builder()
-                .admin(user)
+                .manager(manager)
                 .token(jwtToken)
                 .tokenType(TokenType.BEARER)
                 .expired(false)
@@ -82,8 +85,8 @@ public class UserService {
         tokenRepository.save(token);
     }
 
-    private void revokeAllUserTokens(Admin user) {
-        var validUserTokens = tokenRepository.findAllValidTokenByUser(user.getId());
+    private void revokeAllUserTokens(Manager manager) {
+        var validUserTokens = tokenRepository.findAllValidTokenByUser(manager.getId());
         if (validUserTokens.isEmpty())
             return;
         validUserTokens.forEach(token -> {
@@ -106,7 +109,7 @@ public class UserService {
         refreshToken = authHeader.substring(7);
         userEmail = jwtService.extractUsername(refreshToken);
         if (userEmail != null) {
-            var user = this.repository.findByEmail(userEmail)
+            var user = this.managerRepository.findByEmail(userEmail)
                     .orElseThrow();
             if (jwtService.isTokenValid(refreshToken, user)) {
                 var accessToken = jwtService.generateToken(user);

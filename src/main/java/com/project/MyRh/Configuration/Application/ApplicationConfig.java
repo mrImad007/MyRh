@@ -1,16 +1,14 @@
 package com.project.MyRh.Configuration.Application;
 
-import com.project.MyRh.Models.Entities.Admin;
-import com.project.MyRh.Repositories.AdminRepository;
-import jakarta.persistence.criteria.CriteriaBuilder;
+import com.project.MyRh.Repositories.Auth.ManagerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.domain.AuditorAware;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -20,7 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @RequiredArgsConstructor
 public class ApplicationConfig {
 
-    private final AdminRepository repository;
+    private final ManagerRepository repository;
 
     @Bean
     public UserDetailsService userDetailsService() {
@@ -36,10 +34,6 @@ public class ApplicationConfig {
         return authProvider;
     }
 
-//    @Bean
-//    public AuditorAware<Integer> auditorAware() {
-//        return new ApplicationAuditAware();
-//    }
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
