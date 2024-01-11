@@ -1,8 +1,10 @@
 package com.project.MyRh.Models.Enums;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+@Getter
 @RequiredArgsConstructor
 public enum Permission {
 
@@ -10,17 +12,15 @@ public enum Permission {
     ADMIN_UPDATE("admin:update"),
     ADMIN_CREATE("admin:create"),
     ADMIN_DELETE("admin:delete"),
-    COMPANY_READ("management:read"),
-    COMPANY_UPDATE("management:update"),
-    COMPANY_CREATE("management:create"),
-    COMPANY_DELETE("management:delete"),
-    APPLICANT_READ(""),
-    APPLICANT_UPDATE(""),
-    APPLICANT_DELETE(""),
-    APPLICANT_CREATE(""),
-
+    COMPANY_READ("company:read"),
+    COMPANY_UPDATE("company:update"),
+    COMPANY_CREATE("company:create"),
+    COMPANY_DELETE("company:delete"),
+    APPLICANT_READ("applicant::read"),
+    APPLICANT_UPDATE("applicant::update"),
+    APPLICANT_DELETE("applicant::create"),
+    APPLICANT_CREATE("applicant::delete"),
     ;
 
-    @Getter
     private final String permission;
 }
