@@ -1,5 +1,6 @@
 package com.project.MyRh.DTO;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.MyRh.Models.Entities.Company;
 import com.project.MyRh.Models.Enums.ContractType;
 import jakarta.persistence.CascadeType;
@@ -29,5 +30,6 @@ public class JobOfferDto {
     @NotEmpty
     private ContractType contractType;
     @NotEmpty
+    @JsonIgnore
     private Company company;
 }

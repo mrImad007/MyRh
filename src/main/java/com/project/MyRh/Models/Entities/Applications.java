@@ -11,7 +11,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class JobApplicants {
+public class Applications {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -24,4 +24,16 @@ public class JobApplicants {
     @ManyToOne
     @JsonIgnore
     private Applicant applicant;
+
+
+    @Override
+    public String toString() {
+        return "Applications{" +
+                "id=" + id +
+                ", status='" + status + '\'' +
+                ", date=" + date +
+                ", jobOffer=" + (jobOffer != null ? jobOffer.getTitle() : "null") +
+                ", applicant=" + (applicant != null ? applicant.getName() : "null") +
+                '}';
+    }
 }

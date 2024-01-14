@@ -16,9 +16,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 
 
-import static com.project.MyRh.Models.Enums.Permission.*;
 import static com.project.MyRh.Models.Enums.Role.*;
-import static org.springframework.http.HttpMethod.*;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
 @Configuration
@@ -29,9 +27,11 @@ public class SecurityConfig {
 
     private static final String[] WHITE_LIST_URL = {
             "POST", "/api/auth/**",
-            "GET", "api/companies/**",
-            "GET", "api/offers/**",
+//            "GET", "api/companies/**",
+//            "GET", "api/offers/**",
+            "/api/applications/**"
     };
+
     private final JwtAuthFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
     private final LogoutHandler logoutHandler;
@@ -43,10 +43,10 @@ public class SecurityConfig {
                 .authorizeHttpRequests(req -> req
                                 .requestMatchers(WHITE_LIST_URL)
                                 .permitAll()
-                                .requestMatchers("/api/admin/**").hasAnyRole(ADMIN.name())
-                                .requestMatchers("/api/companies/**").hasAnyAuthority(ADMIN.name(), COMPANY.name())
-                                .requestMatchers("/api/offers/**").hasAnyAuthority(COMPANY.name())
-                                .requestMatchers("/api/applications/**").hasAnyAuthority(COMPANY.name(),APPLICANT.name())
+                                .requestMatchers("/api/admin/**").hasAnyAuthority(ADMIN.name())
+                                .requestMatchers("/api/companies/**").hasAnyAuthority(ADMIN.name(), COMPANY.name(), APPLICANT.name())
+                                .requestMatchers("/api/offers/**").hasAnyAuthority(COMPANY.name(), APPLICANT.name())
+                                .requestMatchers("/api/applications/**").hasAnyAuthority(APPLICANT.name(),COMPANY.name())
                                 .anyRequest()
                                 .authenticated()
                 )

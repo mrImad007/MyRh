@@ -32,5 +32,14 @@ public class JobOffer {
     private Company company;
     @OneToMany(mappedBy = "jobOffer")
     @JsonIgnore
-    private List<JobApplicants> jobApplicants;
+    private List<Applications> applications;
+
+    @Override
+    public String toString() {
+        return "JobOffer{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", company=" + (company != null ? company.getName() : "null") +
+                '}';
+    }
 }

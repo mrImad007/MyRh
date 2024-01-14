@@ -36,13 +36,24 @@ class Company{
     -address : String
     -description : String
     -logo : String
+    -offersCounter : Integer
     }
-class JobApplication{
+class Applications{
     -id : Integer
     -status : String
     -date : Date
     }
 
+class Pack{
+    -id : Integer
+    -name : String
+    -price : Real
+    }
+
+class Subscription{
+    -id : Integer
+    -date : Date
+}
 interface CONTRACT_TYPE{
     +CDI
     +CDD
@@ -57,6 +68,8 @@ Company  "1" o-- "1..*" JobOffer
 Admin  "1" -- "1..*" JobOffer
 JobOffer +-- CONTRACT_TYPE
 Applicant "1..*" -- "1..*" JobOffer
-(JobOffer, Applicant) .. JobApplication
+(JobOffer, Applicant) .. Applications
+Company "1..*" -- "1..*" Pack
+(Company, Pack) .. Subscription
 
 @enduml

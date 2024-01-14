@@ -33,5 +33,5 @@ public class Applicant {
     private String Resume;
 
     @OneToMany(mappedBy = "applicant")
-    private List<JobApplicants> jobApplicants;
+    private List<Applications> applications;
 }
