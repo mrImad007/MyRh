@@ -24,6 +24,7 @@ public class CompanyRequest {
     private String logo;
     @NotBlank(message = "Description is mandatory")
     private String description;
+    private Integer offersCounter;
 
     public Company toModel(){
         return Company.builder()
@@ -34,6 +35,7 @@ public class CompanyRequest {
                 .address(this.address)
                 .logo(this.logo)
                 .description(this.description)
+                .offersCounter(this.offersCounter)
                 .build();
     }
 }

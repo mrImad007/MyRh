@@ -35,8 +35,11 @@ public class CompanyService {
         if (isRequestValid(companyRequest)) {
             if(companyRepository.findByEmailAndPhone(companyRequest.getEmail(),companyRequest.getPhone()) == null) {
                 try {
+                    companyRequest.setOffersCounter(3);
+                    System.out.println("insideTheService : "+companyRequest);
                     return companyMapper.mapTo(companyRepository.save(companyRequest.toModel()));
                 } catch (Exception e) {
+                    System.out.println("theException : "+e);
                     throw new OperationFailed("Couldn't save company");
                 }
             }else {
@@ -69,5 +72,13 @@ public class CompanyService {
         }else {
             return companyMapper.mapTo(companyRepository.findByEmailAndPassword(email,password));
         }
+    }
+
+    public Company findById(Integer companyId) {
+        return companyRepository.findById(companyId).isPresent() ? companyRepository.findById(companyId).get() : null;
+    }
+
+    public Company updateOffersCounter(Company company){
+        return company != null ? companyRepository.save(company) : null;
     }
 }

@@ -16,9 +16,7 @@ import java.util.Date;
 public class Subscription {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotEmpty(message = "Id is mandatory")
     private Integer id;
-    @NotEmpty(message = "Date is mandatory")
     private Date date;
     @ManyToOne
     private Company company;

@@ -7,6 +7,7 @@ import com.project.MyRh.DTO.Request.CompanyRequest;
 import com.project.MyRh.Services.CompanyService;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -36,7 +37,7 @@ public class CompanyController {
         return companyService.getByName(name);
     }
 
-    @PostMapping
+    @PostMapping(consumes = MediaType.ALL_VALUE)
     public CompanyDto saveCompany(@RequestPart("companyRequest") CompanyRequest companyRequest, @RequestPart("file") MultipartFile file) throws IOException {
 
         //companyRequest.setLogo("/Users/imads/Desktop/Junks/"+file.getOriginalFilename());

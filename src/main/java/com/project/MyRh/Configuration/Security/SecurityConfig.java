@@ -29,7 +29,8 @@ public class SecurityConfig {
             "POST", "/api/auth/**",
 //            "GET", "api/companies/**",
 //            "GET", "api/offers/**",
-            "/api/applications/**"
+            "/api/applications/**",
+            "/api/subscriptions/**"
     };
 
     private final JwtAuthFilter jwtAuthFilter;

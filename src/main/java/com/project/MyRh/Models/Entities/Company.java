@@ -33,7 +33,6 @@ public class Company {
     private String description;
     @NotBlank(message = "Logo is mandatory")
     private String logo;
-    @NotEmpty(message = "OffersCounter is mandatory")
     private Integer offersCounter;
 
     @OneToMany(mappedBy = "company")

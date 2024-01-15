@@ -22,4 +22,5 @@ public class CompanyDto {
     private String logo;
     @NotEmpty(message = "Description is mandatory")
     private String description;
+    private Integer offersCounter;
 }

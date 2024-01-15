@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class JobOfferService {
@@ -58,11 +59,13 @@ public class JobOfferService {
 
     @Transactional
     public JobOfferDto saveJobOffer(JobOfferRequest jobOfferRequest){
-        System.out.println("====================================");
-        System.out.println(jobOfferRequest);
-        System.out.println("====================================");
         if (jobOfferRequest != null){
-            return jobOfferMapper.mapTo(jobOfferRepository.save(jobOfferRequest.toModel()));
+            Integer offersCounter = companyOffersCounter(jobOfferRequest.getCompany_id());
+            if (offersCounter > 0){
+                return jobOfferMapper.mapTo(jobOfferRepository.save(jobOfferRequest.toModel()));
+            }else {
+                throw new OperationFailed("You need to upgrade your Offers Pack !");
+            }
         }else{
             throw new OperationFailed("No values in the request");
         }
@@ -76,4 +79,15 @@ public class JobOfferService {
             throw new OperationFailed("No id, Operation failed!");
         }
     }
+
+    public Integer companyOffersCounter(Integer company_id){
+        Optional<Company> companyOptional = companyRepository.findById(company_id);
+        if (companyOptional.isPresent()){
+            Company company = companyOptional.get();
+            return company.getOffersCounter();
+        }else {
+            throw new NotFound("Couldn't find the company by its id !");
+        }
+    }
+
 }
