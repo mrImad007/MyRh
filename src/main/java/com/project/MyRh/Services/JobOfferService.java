@@ -8,21 +8,20 @@ import com.project.MyRh.Mappers.Mapper;
 import com.project.MyRh.Models.Entities.Company;
 import com.project.MyRh.Models.Entities.JobOffer;
 import com.project.MyRh.Repositories.CompanyRepository;
-import com.project.MyRh.Repositories.jobOfferRepository;
+import com.project.MyRh.Repositories.JobOfferRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class JobOfferService {
-    private final jobOfferRepository jobOfferRepository;
+    private final JobOfferRepository jobOfferRepository;
     private final CompanyRepository companyRepository;
     private final Mapper<JobOffer, JobOfferDto> jobOfferMapper;
     @Autowired
-    public JobOfferService(com.project.MyRh.Repositories.jobOfferRepository jobOfferRepository, CompanyRepository companyRepository, Mapper<JobOffer, JobOfferDto> jobOfferMapper) {
+    public JobOfferService(JobOfferRepository jobOfferRepository, CompanyRepository companyRepository, Mapper<JobOffer, JobOfferDto> jobOfferMapper) {
         this.jobOfferRepository = jobOfferRepository;
         this.companyRepository = companyRepository;
         this.jobOfferMapper = jobOfferMapper;
@@ -56,8 +55,16 @@ public class JobOfferService {
         }
     }
 
+    public JobOffer findJobOfferById(Integer jobOfferId){
+        if (jobOfferRepository.findById(jobOfferId).isEmpty()){
+            return jobOfferRepository.findById(jobOfferId).get();
+        }else {
+            throw new NotFound("No JobOffer found with this id :"+jobOfferId);
+        }
+    }
 
-    @Transactional
+
+//    @Transactional
     public JobOfferDto saveJobOffer(JobOfferRequest jobOfferRequest){
         if (jobOfferRequest != null){
             Integer offersCounter = companyOffersCounter(jobOfferRequest.getCompany_id());

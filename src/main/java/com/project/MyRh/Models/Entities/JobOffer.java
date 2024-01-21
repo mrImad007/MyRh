@@ -25,6 +25,7 @@ public class JobOffer {
     @NotBlank(message = "Location is mandatory")
     private String location;
     private Date date;
+    private String status;
     @Enumerated(EnumType.STRING)
     private ContractType contractType;
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)

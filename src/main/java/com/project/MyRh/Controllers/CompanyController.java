@@ -39,8 +39,6 @@ public class CompanyController {
 
     @PostMapping(consumes = MediaType.ALL_VALUE)
     public CompanyDto saveCompany(@RequestPart("companyRequest") CompanyRequest companyRequest, @RequestPart("file") MultipartFile file) throws IOException {
-
-        //companyRequest.setLogo("/Users/imads/Desktop/Junks/"+file.getOriginalFilename());
         String imageURL = fileUpload.uploadFile(file);
         companyRequest.setLogo(imageURL);
         return companyService.saveCompany(companyRequest);
