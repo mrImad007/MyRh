@@ -20,7 +20,7 @@ public class ApplicationsController {
     }
 
     @GetMapping()
-    public ApplicationsDto findCompanyApplications(@RequestParam Integer applicant_id, @RequestParam Integer jobOffer_id){
+    public ApplicationsDto findCompanyApplication(@RequestParam Integer applicant_id, @RequestParam Integer jobOffer_id){
         return applicationsService.findByApplicant_IdAndJobOffer_Id(applicant_id,jobOffer_id);
     }
 

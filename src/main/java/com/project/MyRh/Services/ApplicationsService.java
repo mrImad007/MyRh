@@ -107,10 +107,7 @@ public class ApplicationsService {
         if (existingApplication != null) {
             // Found the application, update the status
             Applications application = jobApplicantsMapper.mapFrom(existingApplication);
-            System.out.println("The Application before: " + application + " the status: " + status);
             application.setStatus(status);
-            System.out.println("The Application after: " + application);
-
             return jobApplicantsMapper.mapTo(applicationsRepository.save(application));
         } else {
             throw new NotFound("Application not found");

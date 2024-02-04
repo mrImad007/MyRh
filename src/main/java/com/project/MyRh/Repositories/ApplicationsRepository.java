@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
-@Repository
+
 public interface ApplicationsRepository extends JpaRepository<Applications, Integer>{
     Optional<Applications> findByApplicant_IdAndJobOffer_Id(Integer applicant_id, Integer jobOffer_id);
     List<Applications> findByJobOffer_Id(Integer jobOffer_id);

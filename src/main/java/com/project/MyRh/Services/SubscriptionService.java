@@ -1,6 +1,5 @@
 package com.project.MyRh.Services;
 
-import com.project.MyRh.DTO.CompanyDto;
 import com.project.MyRh.DTO.Request.SubscriptionRequest;
 import com.project.MyRh.DTO.SubscriptionDto;
 import com.project.MyRh.Exceptions.Exception.NotFound;

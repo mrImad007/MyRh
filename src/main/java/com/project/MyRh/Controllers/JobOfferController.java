@@ -31,7 +31,6 @@ public class JobOfferController {
 
     @GetMapping("/company/{company}")
     public List<JobOfferDto> findOfferByCompany(@PathVariable @NotNull String company){
-        System.out.println("company name : "+company);
         return jobOfferService.findOfferByCompany(company);
     }
 
